@@ -15,8 +15,49 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    //create the tab bar controller object
+    self.tabBarController = [[UITabBarController alloc] init];
+    
+    
+    NSString* iImageURL = @"http://www.marketingpilgrim.com/wp-content/uploads/2013/07/Instagram-logo.jpg";
+    NSData* iImageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:iImageURL]];
+    UIImage* iImage = [[UIImage alloc] initWithData:iImageData];
+    //TODO: IMAGE IS NOT WORKING
+    //SCROLLBOX IS BEING RESIZED
+    //IS search working, Flickr no
+    // sometimes SIGABRT
+    
+    
+    //create the first view controller
+    self.mainView = [[ISMainViewController alloc] initWithNibName:@"ISMainViewController" bundle:nil];
+    //    [self.mainView.view setBackgroundColor:[UIColor redColor]];
+    [self.mainView.view setFrame:[[UIScreen mainScreen] bounds]];
+    //this is where we set the main (instagram) view's representation on the tab bar
+    self.mainView.tabBarItem = [[UITabBarItem alloc]                              initWithTitle:@"Instagram" image:iImage tag:1];
+    
+    //create the second view controller
+    self.flickrView = [[ISFlickrViewController alloc] initWithNibName:@"ISFlickrViewController" bundle:nil];
+//    [self.flickrView.view setBackgroundColor:[UIColor blueColor]];
+    [self.flickrView.view setFrame:[[UIScreen mainScreen] bounds]];
+    //this is where we set the blue view's representation on the tab bar
+    self.flickrView.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Flickr" image:nil tag:2];
+    
+    
+    //add the viewcontrollers to the tab bar
+    [self.tabBarController setViewControllers:[NSArray arrayWithObjects:self.mainView, self.flickrView, nil] animated:YES];
+    
+    //add the tabbarcontroller as the root view for the App
+    [self.window setRootViewController:self.tabBarController];
+    
+    // OLD STUFF:
+    //   self.mainView = [[ISMainViewController alloc] initWithNibName:@"ISMainViewController" bundle:nil]; //create mainView
+    //    [self.window addSubview: self.mainView.view]; //mainView is a view controller, not a view
+
     [self.window makeKeyAndVisible];
     return YES;
+
+  
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
