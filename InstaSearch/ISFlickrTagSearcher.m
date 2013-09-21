@@ -13,7 +13,8 @@
 - (id)initWithTagQuery:(NSString *)query andTarget:(id)incomingTarget andAction:(SEL)incomingAction;
 {
     self = [super init];
-    NSString* url = [NSString stringWithFormat: @"http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=7a5959f71c12c8b6f430bf02723a51b0&tags=%@&per_page=20&format=json", query];
+    // assemble url to access api
+    NSString* url = [NSString stringWithFormat: @"http://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=7a5959f71c12c8b6f430bf02723a51b0&tags=%@&per_page=20&format=json&nojsoncallback=1", query];
     if (self) {
         self.connection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]] delegate:self];
         // connect to url
@@ -35,8 +36,6 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     NSMutableDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:self.data options:NSJSONReadingMutableContainers error:nil];
     // read self.data JSON into a dictionary
-    
-    //TODO: self.data exists but dictionary is null....
     
     [self.target performSelector:self.action withObject:dictionary];
     // call action on target with args dictionary

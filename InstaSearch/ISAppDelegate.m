@@ -5,6 +5,7 @@
 //  Created by Sumaiya Hashmi on 9/11/13.
 //  Copyright (c) 2013 Sumaiya Hashmi. All rights reserved.
 //
+// tab bar icons from glyphish.com
 
 #import "ISAppDelegate.h"
 
@@ -19,29 +20,20 @@
     //create the tab bar controller object
     self.tabBarController = [[UITabBarController alloc] init];
     
-    
-    NSString* iImageURL = @"http://www.marketingpilgrim.com/wp-content/uploads/2013/07/Instagram-logo.jpg";
-    NSData* iImageData = [[NSData alloc]initWithContentsOfURL:[NSURL URLWithString:iImageURL]];
-    UIImage* iImage = [[UIImage alloc] initWithData:iImageData];
-    //TODO: IMAGE IS NOT WORKING
-    //SCROLLBOX IS BEING RESIZED
-    //IS search working, Flickr no
-    // sometimes SIGABRT
+//    UIImage* iImage = [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"instasearchLogo" ofType:@"png"]];
     
     
     //create the first view controller
     self.mainView = [[ISMainViewController alloc] initWithNibName:@"ISMainViewController" bundle:nil];
-    //    [self.mainView.view setBackgroundColor:[UIColor redColor]];
     [self.mainView.view setFrame:[[UIScreen mainScreen] bounds]];
     //this is where we set the main (instagram) view's representation on the tab bar
-    self.mainView.tabBarItem = [[UITabBarItem alloc]                              initWithTitle:@"Instagram" image:iImage tag:1];
-    
+    self.mainView.tabBarItem = [[UITabBarItem alloc]                              initWithTitle:@"Instagram" image:[UIImage imageNamed:@"86-camera.png"] tag:1];
+
     //create the second view controller
     self.flickrView = [[ISFlickrViewController alloc] initWithNibName:@"ISFlickrViewController" bundle:nil];
-//    [self.flickrView.view setBackgroundColor:[UIColor blueColor]];
     [self.flickrView.view setFrame:[[UIScreen mainScreen] bounds]];
-    //this is where we set the blue view's representation on the tab bar
-    self.flickrView.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Flickr" image:nil tag:2];
+    //this is where we set the flickr view's representation on the tab bar
+    self.flickrView.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"Flickr" image:[UIImage imageNamed:@"41-picture-frame.png"] tag:2];
     
     
     //add the viewcontrollers to the tab bar

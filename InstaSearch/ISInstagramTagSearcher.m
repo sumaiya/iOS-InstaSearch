@@ -13,6 +13,7 @@
 - (id)initWithTagQuery:(NSString *)query andTarget:(id)incomingTarget andAction:(SEL)incomingAction;
 {
     self = [super init];
+    // assemble api url, including query
     NSString* url = [NSString stringWithFormat: @"https://api.instagram.com/v1/tags/%@/media/recent?client_id=f202e5f7942a41969c822358c7be8e64", query];
     if (self) {
         self.connection = [[NSURLConnection alloc] initWithRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:url]] delegate:self];

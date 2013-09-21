@@ -28,20 +28,24 @@
     {
         [self.queryField resignFirstResponder]; //dismiss keyboard if not already
     }
+    // set up tag searcher
    self.searcher = [[ISInstagramTagSearcher alloc] initWithTagQuery:[self queryField].text andTarget:self andAction:@selector(handleInstagramData:)];
 }
 
 - (void)handleInstagramData:(NSMutableDictionary *)data {
     NSMutableArray *photos = [data objectForKey:@"data"];
+    // array of photo dictionaries
     
     for (UIView *subView in [self.searchResultsBox subviews]) {
         [subView removeFromSuperview];
+        // remove previous photos
     }
     
     [self.searchResultsBox setContentSize:CGSizeMake(320,100*[photos count])];
     int i = 0;
 
     for (NSMutableDictionary *photo in photos) {
+        // get thumbnail image,  place in UIscrollview (via a temporary imageview)
         INETImageView* temp = [[INETImageView alloc] initWithURL:[NSURL URLWithString:[[[photo objectForKey:@"images"] objectForKey:@"thumbnail"] objectForKey:@"url"]] andFrame:CGRectMake(0, 150*i, 188, 150)];
         [self.searchResultsBox addSubview:temp];
         i++;

@@ -30,19 +30,22 @@
         [self.queryField resignFirstResponder]; //dismiss keyboard if not already
     }
     
-    self.searcher = [[ISFlickrTagSearcher alloc] initWithTagQuery:[self queryField].text andTarget:self andAction:@selector(handleInstagramData:)];
+    //set up tag searcher
+    self.searcher = [[ISFlickrTagSearcher alloc] initWithTagQuery:[self queryField].text andTarget:self andAction:@selector(handleFlickrData:)];
 }
 
-- (void)handleInstagramData:(NSMutableDictionary *)data {
+- (void)handleFlickrData:(NSMutableDictionary *)data {
     NSMutableArray *photos = [[data objectForKey:@"photos"] objectForKey:@"photo"];
     
     [self.searchResultsBox setContentSize:CGSizeMake(320,100*[photos count])];
     int i = 0;
     
+    // iterate through array of photo dictionaries
     for (NSMutableDictionary *photo in photos) {
+        // assemble photo url from farm, server, id, and secrets
         NSString *photoUrl = [NSString stringWithFormat:@"http://farm%@.staticflickr.com/%@/%@_%@.jpg", [photo objectForKey:@"farm"], [photo objectForKey:@"server"], [photo objectForKey:@"id"], [photo objectForKey:@"secret"]];
 
-        
+        // add photo to scrollView via an imageView
         INETImageView* temp = [[INETImageView alloc] initWithURL:[NSURL URLWithString:photoUrl] andFrame:CGRectMake(0, 150*i, 188, 150)];
         [self.searchResultsBox addSubview:temp];
         i++;
